@@ -1,64 +1,92 @@
+// A C# Program for Server
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-class HostServer {
-    public static void Main()
-    {
-        TcpListener server = null;
-        try
-        {
-            Int32 port = 44444;
-            IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+namespace Server {
 
-            server = new TcpListener(localAddr, port);
-            server.Start();
+class Program {
 
-            Byte[] bytes = new Byte[256];
-            String data = null;
+// Main Method
+static void Main(string[] args)
+{
+	ExecuteServer();
+}
 
-            while(true)
-            {
-                Console.Write("Waiting for a connection...");
-                
-                using (TcpClient client = server.AcceptTcpClient())
-                {
-                    data = null;
-                
-                    NetworkStream stream = client.GetStream();
-                    Console.WriteLine("Connected!");
+public static void ExecuteServer()
+{
+	// Establish the local endpoint 
+	// for the socket. Dns.GetHostName
+	// returns the name of the host 
+	// running the application.
+	IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
+	IPAddress ipAddr = ipHost.AddressList[0];
+	IPEndPoint localEndPoint = new IPEndPoint(ipAddr, 11111);
 
-                    data = null;
-                
-                
+	// Creation TCP/IP Socket using 
+	// Socket Class Constructor
+	Socket listener = new Socket(ipAddr.AddressFamily,
+				SocketType.Stream, ProtocolType.Tcp);
 
-                    int i;
+	try {
+		
+		// Using Bind() method we associate a
+		// network address to the Server Socket
+		// All client that will connect to this 
+		// Server Socket must know this network
+		// Address
+		listener.Bind(localEndPoint);
 
-                }
-                 while((i = stream.Read(bytes, 0, bytes.Length))!=0)
-                    {
-                    // Translate data bytes to a ASCII string.
-                    data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                    Console.WriteLine("Received: {0}", data);
+		// Using Listen() method we create 
+		// the Client list that will want
+		// to connect to Server
+		listener.Listen(10);
 
-                    // Process the data sent by the client.
-                    data = data.ToUpper();
+		while (true) {
+			
+			Console.WriteLine("Waiting connection ... ");
 
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+			// Suspend while waiting for
+			// incoming connection Using 
+			// Accept() method the server 
+			// will accept connection of client
+			Socket clientSocket = listener.Accept();
 
-                    // Send back a response.
-                    stream.Write(msg, 0, msg.Length);
-                    Console.WriteLine("Sent: {0}", data);
-                    }
-                
-            }
-        }
-        catch 
-        {
-            Console.WriteLine("Yeap.");
-        }
-    }
-        
+			// Data buffer
+			byte[] bytes = new Byte[1024];
+			string data = null;
+
+			while (true) {
+
+				int numByte = clientSocket.Receive(bytes);
+				
+				data += Encoding.ASCII.GetString(bytes,
+										0, numByte);
+											
+				if (data.IndexOf("<EOF>") > -1)
+					break;
+			}
+
+			Console.WriteLine("Text received -> {0} ", data);
+			byte[] message = Encoding.ASCII.GetBytes("Test Server");
+
+			// Send a message to Client 
+			// using Send() method
+			clientSocket.Send(message);
+
+			// Close client Socket using the
+			// Close() method. After closing,
+			// we can use the closed Socket 
+			// for a new Client Connection
+			clientSocket.Shutdown(SocketShutdown.Both);
+			clientSocket.Close();
+		}
+	}
+	
+	catch (Exception e) {
+		Console.WriteLine(e.ToString());
+	}
+}
+}
 }
