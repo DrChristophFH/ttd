@@ -27,6 +27,10 @@ We use the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-
 
 ## Coding Style
 
+The coding style is based on the [C# Coding Conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions) with some modifications, and applies to all C# source files. Stuff that is not explicitly mentioned below should be followed as per the Microsoft guidelines.
+
+The following are the coding conventions:
+
 1. File Naming
    1. Use PascalCase for file names.
    2. The file name should be the same as the class name.
@@ -48,17 +52,22 @@ We use the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-
    2. Don't use more than one consecutive blank line.
    3. Don't use blank lines at the start or end of a method.
 9. Single Line Statements
-    1. Braces must always be used, even for single-line statements.
+   1. Braces must always be used, even for single-line statements.
 10. Nesting
-    1.  Avoid deep nesting.
-    2.  Prefer early returns to deep nesting.
+    1. Avoid deep nesting.
+    2. Prefer early returns to deep nesting.
 11. Conditions
-    1.  Split complex conditions into separate variables. (e.g., `bool playerIsGrounded = m.z == floor.z && ...;`) THe compiler is smart enough to inline these.
-12. `var`
-   1. Prefer explicit types over 'var' keyword.
-   2. Only use 'var' when the exact type is already there on the right side of the assignment.
-   3. Do not use 'var' for simple types like `int`, `string`, etc.
-   4. Prefer `ExampleClass instance2 = new();` over `var instance2 = new ExampleClass();`
+    1. Split complex conditions into separate variables. (e.g., `bool playerIsGrounded = m.z == floor.z && ...;`) The compiler is smart enough to inline these.
+12. Using `var` keyword
+    1. Prefer explicit types over 'var' keyword.
+    2. Only use 'var' when the exact type is already there on the right side of the assignment.
+    3. Do not use 'var' for simple types like `int`, `string`, etc.
+    4. Prefer `ExampleClass instance2 = new();` over `var instance2 = new ExampleClass();`
 13. Documentation
-    1.  Always document your classes and public methods and properties.
-    2.  Use `/** * */` for documentation comments.
+    1. Always document your classes and public methods and properties.
+    2. Use `/** * */` for documentation comments.
+
+> [!NOTE]
+> All guidelines are "GUIDE"lines, not "FOLLOW OR DIE"lines. If you have a good reason to break a guideline, be it for readability, performance, or any other reason, do so. Just make sure to document your reasoning, ideally in the code itself or in the pull request.
+>
+> As with everything, the guidelines serve as a starting point. If you have a better idea, feel free to propose it. We are always open to improvements. The goal is consistency, readability, and maintainability.
