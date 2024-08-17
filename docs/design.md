@@ -97,7 +97,7 @@ Shows the production tree for the specified resource.
 
 Example of a simple factory layout:
 
-![alt text](image-9.png)
+![alt text](res/image-9.png)
 
 ### Ressources
 
@@ -109,7 +109,7 @@ Ressources in general are represented by a capital latin letter with a distinct 
 | -------- | ----- |
 | Symbol   | `T`   |
 
-![alt text](image.png)
+![alt text](res/image.png)
 
 #### Iron
 
@@ -117,7 +117,7 @@ Ressources in general are represented by a capital latin letter with a distinct 
 | -------- | ----- |
 | Symbol   | `R`   |
 
-![alt text](image-6.png)
+![alt text](res/image-6.png)
 
 ### Buildings
 
@@ -131,7 +131,7 @@ Transportation buildings are represented by a symbol with a distinct foreground 
 | -------- | ----------------------------- |
 | Symbols  | `│`, `─`, `┌`, `┐`, `└`, `┘`, |
 
-![alt text](image-5.png)
+![alt text](res/image-5.png)
 
 ##### Merger
 
@@ -139,7 +139,7 @@ Transportation buildings are represented by a symbol with a distinct foreground 
 | -------- | ----- |
 | Symbol   | `<`, `>`, `^`, `v` |
 
-![alt text](image-4.png)
+![alt text](res/image-4.png)
 
 ##### Splitter
 
@@ -147,7 +147,7 @@ Transportation buildings are represented by a symbol with a distinct foreground 
 | -------- | ------------------ |
 | Symbol   | `⊏`, `⊐`, `⊓`, `⊔` |
 
-![alt text](image-3.png)
+![alt text](res/image-3.png)
 
 #### Base
 
@@ -157,7 +157,7 @@ The base is represented by the symbol `@` and is enclosed in a thick border for 
 | -------- | ----- |
 | Symbol   | `@`   |
 
-![alt text](image-2.png)
+![alt text](res/image-2.png)
 
 
 #### Production
@@ -170,7 +170,7 @@ Production buildings are represented by a greek lowercase letter with a distinct
 | -------- | ----- |
 | Symbol   | `α`   |
 
-![alt text](image-1.png)
+![alt text](res/image-1.png)
 
 ##### Iron Mine
 
@@ -178,7 +178,7 @@ Production buildings are represented by a greek lowercase letter with a distinct
 | -------- | ----- |
 | Symbol   | `γ`   |
 
-![alt text](image-7.png)
+![alt text](res/image-7.png)
 
 #### Processing and Crafting
 
@@ -190,4 +190,4 @@ Processing and crafting buildings are represented by lowercase latin letters wit
 | -------- | ----- |
 | Symbol   | `s`   |
 
-![alt text](image-8.png)
+![alt text](res/image-8.png)
