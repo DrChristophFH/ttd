@@ -5,23 +5,20 @@
 </p>
 
 ## General Outline
-`terminal-tower-defense` (ttd) is a hybrid game combining tower defense and factory simulation genres. Played entirely in the terminal, it leverages VT-100 escape sequences for a platform-independent display. The game runs as a daemon in the background and is interfaced via the command line, using commands prefixed with `> ttd`.
+`terminal-tower-defense` (ttd) is a hybrid game combining tower defense and factory simulation genres. Played entirely in the terminal, it leverages VT-100 escape sequences for a platform-independent display. The game runs as a daemon in the background and is interfaced via the command line, using commands prefixed with `ttd`.
 
 ## Project Structure
 
 ```
 /terminal-tower-defense
-|-- /experiments  # temporary files and experiments for development
-|-- /src
-|   |-- /main
-|   |   |-- /java  # source code
 |-- /docs
 |   |-- design.md         # design documentation
 |   |-- architecture.md   # system architecture
+|   |-- contribution.md   # contribution guidelines
 |-- README.md
 ```
 
-The project board is available [here](https://github.com/users/DrChristophFH/projects/1).
+The project board is available [here](https://github.com/users/DrChristophFH/projects/2).
 
 ## Installation and Requirements
 ### Requirements
@@ -33,7 +30,11 @@ The project board is available [here](https://github.com/users/DrChristophFH/pro
 <!-- todo -->
 
 ## Documentation
-For more detailed information, refer to the [docs](./docs) directory.
+For more detailed information, refer to the [docs](./docs) directory:
+
+- [Contribution Guidelines](./docs/contribution.md)
+- [Design Documentation](./docs/design.md)
+- [System Architecture](./docs/architecture.md)
 
 ## Hints
 - Make sure your terminal supports VT-100 escape sequences.
