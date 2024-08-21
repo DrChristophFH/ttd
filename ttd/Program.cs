@@ -3,10 +3,10 @@ using ttd.Render;
 
 namespace ttd;
 
-class Program
+internal static class Program
 {
     // Spinner characters
-    private static readonly char[] Spinner = { '|', '/', '-', '\\' };
+    private static readonly char[] Spinner = ['|', '/', '-', '\\'];
     private const int Cols = 150;
     private const int Rows = 40;
     private static readonly Random Random = new Random();
@@ -14,14 +14,14 @@ class Program
     private static readonly Color Green = new Color(0, 255, 0);
     private static readonly Color Black = new Color(0, 0, 0);
     private static readonly Color White = new Color(255, 255, 255);
-    private static bool IsRunning = true;
-    private static readonly object OutputLock = new object();
+    private static bool _isRunning = true;
 
     private static char RandomChar() => (char)(Random.Next(94) + 33);
 
-    private static Color RandomColor() => new Color((byte)Random.Next(256), (byte)Random.Next(256), (byte)Random.Next(256));
+    private static Color RandomColor() =>
+        new Color((byte)Random.Next(256), (byte)Random.Next(256), (byte)Random.Next(256));
 
-    private static void RenderFPS(double fps)
+    private static void RenderFps(double fps)
     {
         Screen.Draw(2, 0, $"FPS: {fps:F2}", Green, Black);
     }
@@ -40,15 +40,10 @@ class Program
 
     private static void RegisterShutdownHook()
     {
-        Console.CancelKeyPress += (sender, e) =>
+        Console.CancelKeyPress += (_, e) =>
         {
             e.Cancel = true;
-            IsRunning = false;
-            lock (OutputLock)
-            {
-                Console.Out.Flush();
-                Screen.ResetAlternateScreenBuffer();
-            }
+            _isRunning = false;
         };
     }
 
@@ -57,30 +52,36 @@ class Program
         int frameCount = 0;
         var stopwatch = new Stopwatch();
         int sbLength = 0;
+        
+        const int bufferSize = 32000;
+        using var outs = new StreamWriter(Console.OpenStandardOutput(), bufferSize: bufferSize);
 
-        lock (OutputLock)
+        RegisterShutdownHook();
+        Screen.SetAlternateScreenBuffer();
+        stopwatch.Start();
+
+        while (_isRunning)
         {
-            RegisterShutdownHook();
-            Screen.SetAlternateScreenBuffer();
-            stopwatch.Start();
+            stopwatch.Stop();
+            double elapsedTime = stopwatch.Elapsed.TotalSeconds;
+            stopwatch.Restart();
 
-            while (IsRunning)
-            {
-                stopwatch.Stop();
-                double elapsedTime = stopwatch.Elapsed.TotalSeconds;
-                stopwatch.Restart();
+            double fps = 1.0 / elapsedTime;
 
-                double fps = 1.0 / elapsedTime;
-
-                RenderRandomChars();
-                frameCount++;
-                char spinnerChar = Spinner[frameCount % Spinner.Length];
-                Screen.Draw(0, 0, spinnerChar, Green, Black);
-                Screen.Draw(0, Rows - 1, $"L {sbLength}", White, Black);
-                RenderFPS(fps);
-                Screen.Render();
-                sbLength = Screen.LastOutput.Length;
-            }
+            RenderRandomChars();
+            frameCount++;
+            char spinnerChar = Spinner[frameCount % Spinner.Length];
+            Screen.Draw(0, 0, spinnerChar, Green, Black);
+            Screen.Draw(0, Rows - 1, $"L {sbLength}", White, Black);
+            RenderFps(fps);
+            string output = Screen.Render();
+            outs.Write(output);
+            outs.Flush();
+            sbLength = output.Length;
         }
+        
+        outs.Flush();
+        Console.Clear();
+        Screen.ResetAlternateScreenBuffer();
     }
 }

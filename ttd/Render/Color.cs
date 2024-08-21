@@ -7,6 +7,8 @@ public readonly struct Color(byte r, byte g, byte b, bool isDefault = false) : I
     public byte B { get; } = b;
     public bool IsDefault { get; } = isDefault;
     
+    public static Color Default { get; } = new Color(true);
+    
     public Color() : this(0, 0, 0, false) { }
     public Color(bool isDefault) : this(0, 0, 0, isDefault) { }
     

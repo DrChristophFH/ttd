@@ -2,6 +2,9 @@
 
 namespace ttd.Render;
 
+/**
+ * 
+ */
 public class Screen
 {
     private readonly ScreenBufferCell[,] _frontBuffer;
@@ -50,10 +53,15 @@ public class Screen
         }
     }
 
-    public void Render()
+    /**
+     * Renders the screen buffer to the console.
+     */
+    public string Render()
     {
         var output = new StringBuilder();
         var lastPosition = (x: -1, y: -1);
+        var lastForeground = new Color(0, 0, 0);
+        var lastBackground = new Color(0, 0, 0);
 
         for (int y = 0; y < _height; y++)
         {
@@ -67,11 +75,20 @@ public class Screen
                         lastPosition = (x, y);
                     }
                     
-                    SetBackgroundColor(output, _backBuffer[x, y].Background);
-                    SetForegroundColor(output, _backBuffer[x, y].Foreground);
+                    if (!lastForeground.Equals(_backBuffer[x, y].Foreground))
+                    {
+                        SetForegroundColor(output, _backBuffer[x, y].Foreground);
+                        lastForeground = _backBuffer[x, y].Foreground;
+                    }
+                    
+                    if (!lastBackground.Equals(_backBuffer[x, y].Background))
+                    {
+                        SetBackgroundColor(output, _backBuffer[x, y].Background);
+                        lastBackground = _backBuffer[x, y].Background;
+                    }
+                    
                     output.Append(_backBuffer[x, y].Character);
                     
-
                     _frontBuffer[x, y].CopyFrom(_backBuffer[x, y]);
                 }
 
@@ -80,8 +97,8 @@ public class Screen
         }
 
         ResetColors(output);
-
-        Console.Write(output);
+        
+        return output.ToString();
     }
 
     public void SetAlternateScreenBuffer() => Console.Write("\x1b[?1049h");
@@ -107,7 +124,7 @@ public class Screen
 
     private static void SetBackgroundColor(StringBuilder output, Color color)
     {
-        if (color.isDefault)
+        if (color.IsDefault)
         {
             SetBackgroundDefault(output);
             return;

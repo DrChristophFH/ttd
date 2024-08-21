@@ -69,7 +69,7 @@ public class ScreenBufferCell
                IsDefaultBackground == other.IsDefaultBackground;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         return obj is ScreenBufferCell cell && Equals(cell);
     }
