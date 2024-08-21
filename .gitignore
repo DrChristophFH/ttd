@@ -5,3 +5,6 @@
 # Compiled output
 obj/
 bin/
+
+# Other files
+*.user
