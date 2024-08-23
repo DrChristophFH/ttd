@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+
 
 
 namespace Server
@@ -11,7 +13,11 @@ namespace Server
     {
         public IPAddress ipAddr = IPAddress.Parse("127.0.0.1");
         public int port = 55555;
-        
+        public async Task AcceptAsyncConnection(Socket s)
+        {
+            var handler = await s.AcceptAsync();
+
+        }
         
     static void Main(string[] args)
     {   
@@ -28,6 +34,7 @@ namespace Server
         //Console.WriteLine(s.GetType());
         s.Bind(localEndPoint);
         s.Listen(5);
+        var handler = serverHost.AcceptAsyncConnection(s);
 
         while(true)
         {
