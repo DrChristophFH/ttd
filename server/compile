@@ -1,6 +1,0 @@
-#!/bin/bash
-mcs Client.cs
-mcs Server.cs
-chmod 775 Client.cs
-chmod 775 Server.cs
-./Server.cs
